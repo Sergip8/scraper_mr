@@ -11,6 +11,8 @@ import psycopg2.extras
 from dotenv import load_dotenv
 from datetime import datetime, timezone
 
+load_dotenv()
+
 
 class CloudflareDetectionError(Exception):
     """Se lanza cuando el sitio sigue mostrando un desafío de Cloudflare."""
@@ -122,11 +124,12 @@ class DatabaseHandler:
 
 
 class Scraper:
-    def __init__(self, base_url=None):
+    def __init__(self):
         """
         Inicializa el scraper usando undetected-chromedriver con perfil persistente.
         """
-        self.base_url = base_url or os.getenv("BASE_URL")
+        self.base_url = os.getenv("BASE_URL")
+        print(f"Base URL configurada: {self.base_url}")
         print("Iniciando navegador con undetected-chromedriver...")
         
         options = uc.ChromeOptions()
